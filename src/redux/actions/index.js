@@ -7,14 +7,24 @@ export const saveEmailAction = (email) => ({
 });
 
 export const SAVE_CURRENCIES = 'SAVE_CURRENCIES';
-
 export const saveCurrenciesAction = (currencies) => ({
   type: SAVE_CURRENCIES,
   currencies,
+});
+
+export const SAVE_EXCHANGE_RATES = 'SAVE_EXCHANGE_RATES';
+export const saveExchangeRatesAction = (currencies, obj) => ({
+  type: SAVE_EXCHANGE_RATES,
+  expense: { ...obj, exchangeRates: currencies },
 });
 
 export const fetchCurrencies = () => async (dispatch) => {
   const response = await getCurrencies();
   dispatch(saveCurrenciesAction(Object.keys(response)
     .filter((element) => element !== 'USDT')));
+};
+
+export const fetchExchangeRates = (obj) => async (dispatch) => {
+  const response = await getCurrencies();
+  dispatch(saveExchangeRatesAction(response, obj));
 };
