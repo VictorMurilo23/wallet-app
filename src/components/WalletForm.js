@@ -1,27 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrencies, fetchExchangeRates } from '../redux/actions';
+import { fetchCurrencies,
+  fetchExchangeRates, updateExpenseAction } from '../redux/actions';
 import Loading from './Loading';
 
 class WalletForm extends Component {
   constructor() {
     super();
-
+    this.alimentacao = 'Alimentação'; // Só fiz isso pq o linter me obrigou.
     this.state = {
       value: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: this.alimentacao,
+      updating: false,
     };
-
-    this.alimentacao = 'Alimentação'; // Só fiz isso pq o linter me obrigou.
   }
 
   componentDidMount() {
     const { saveCurrencies } = this.props;
     saveCurrencies();
+  }
+
+  componentDidUpdate() {
+    const { editor } = this.props;
+    const { updating } = this.state;
+    if (editor && updating === false) {
+      this.update();
+    }
   }
 
   handleChange = ({ target }) => {
@@ -33,17 +41,39 @@ class WalletForm extends Component {
   }
 
   saveInfo = () => {
-    const { expenses, saveExpense } = this.props;
+    const { expenses, saveExpense, editor, updateExpenses, id } = this.props;
     const { value, description, currency, method, tag } = this.state;
-    const obj = {
-      id: expenses.length,
-      value,
-      description,
-      currency,
-      method,
-      tag,
-    };
-    saveExpense(obj);
+    if (editor) {
+      const updatedExpenses = expenses.reduce((acc, cur) => {
+        if (cur.id === id) {
+          const newCur = {
+            id,
+            value: String(value),
+            currency,
+            method,
+            tag,
+            description,
+            exchangeRates: cur.exchangeRates,
+          };
+          acc.push(newCur);
+        } else {
+          acc.push(cur);
+        }
+        return acc;
+      }, []);
+      updateExpenses(updatedExpenses);
+    } else {
+      const obj = {
+        description,
+        value,
+        currency,
+        method,
+        tag,
+        id: expenses[expenses.length - 1] === undefined ? 0
+          : expenses[expenses.length - 1].id + 1,
+      };
+      saveExpense(obj);
+    }
 
     this.setState({
       value: '',
@@ -51,11 +81,25 @@ class WalletForm extends Component {
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
+      updating: false,
+    });
+  }
+
+  update = () => {
+    const { expenses, id } = this.props;
+    const editableObj = expenses.find((expense) => expense.id === id);
+    this.setState({
+      value: editableObj.value,
+      description: editableObj.description,
+      currency: editableObj.currency,
+      method: editableObj.method,
+      tag: editableObj.tag,
+      updating: true,
     });
   }
 
   render() {
-    const { currencies, loading } = this.props;
+    const { currencies, loading, editor } = this.props;
     const { value, description, currency, method, tag } = this.state;
     if (loading) {
       return <Loading />;
@@ -154,8 +198,11 @@ class WalletForm extends Component {
             />
           </label>
 
-          <button type="button" onClick={ this.saveInfo }>
-            Adicionar despesa
+          <button
+            type="button"
+            onClick={ this.saveInfo }
+          >
+            { editor ? 'Editar despesa' : 'Adicionar despesa' }
           </button>
         </form>
       </div>
@@ -169,17 +216,23 @@ WalletForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   saveExpense: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  editor: PropTypes.bool.isRequired,
+  id: PropTypes.number.isRequired,
+  updateExpenses: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   loading: state.wallet.loading,
   expenses: state.wallet.expenses,
+  editor: state.wallet.editor,
+  id: state.wallet.idToEdit,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   saveCurrencies: () => dispatch(fetchCurrencies()),
   saveExpense: (obj) => dispatch(fetchExchangeRates(obj)),
+  updateExpenses: (array) => dispatch(updateExpenseAction(array)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);

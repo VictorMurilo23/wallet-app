@@ -1,4 +1,5 @@
-import { REMOVE_EXPENSE, SAVE_CURRENCIES, SAVE_EXCHANGE_RATES } from '../actions';
+import { REMOVE_EXPENSE,
+  SAVE_CURRENCIES, SAVE_EXCHANGE_RATES, EDIT_EXPENSE, UPDATE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -25,6 +26,18 @@ const wallet = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: action.expenses,
+    };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      idToEdit: action.id,
+      editor: action.editor,
+    };
+  case UPDATE_EXPENSE:
+    return {
+      ...state,
+      expenses: action.expenses,
+      editor: false,
     };
   default:
     return state;

@@ -34,3 +34,16 @@ export const removeExpenseAction = (expenses) => ({
   type: REMOVE_EXPENSE,
   expenses,
 });
+
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const editExpenseAction = (id) => ({
+  type: EDIT_EXPENSE,
+  id,
+  editor: true,
+});
+
+export const UPDATE_EXPENSE = 'UPDATE_EXPENSE';
+export const updateExpenseAction = (expenses) => ({
+  type: UPDATE_EXPENSE,
+  expenses,
+});
