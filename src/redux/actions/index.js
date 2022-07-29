@@ -28,3 +28,9 @@ export const fetchExchangeRates = (obj) => async (dispatch) => {
   const response = await getCurrencies();
   dispatch(saveExchangeRatesAction(response, obj));
 };
+
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
+export const removeExpenseAction = (expenses) => ({
+  type: REMOVE_EXPENSE,
+  expenses,
+});
