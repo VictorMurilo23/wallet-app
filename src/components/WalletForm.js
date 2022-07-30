@@ -28,7 +28,7 @@ class WalletForm extends Component {
     const { editor } = this.props;
     const { updating } = this.state;
     if (editor && updating === false) {
-      this.update();
+      this.editExpense();
     }
   }
 
@@ -85,7 +85,7 @@ class WalletForm extends Component {
     });
   }
 
-  update = () => {
+  editExpense = () => {
     const { expenses, id } = this.props;
     const editableObj = expenses.find((expense) => expense.id === id);
     this.setState({

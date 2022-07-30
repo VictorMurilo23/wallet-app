@@ -6,6 +6,7 @@ import App from './App';
 import Wallet from './pages/Wallet';
 
 const userEmail = 'alguem@gmail.com';
+const totalField = 'total-field';
 
 describe('Teste Login', () => {
   it('Testa se a tela de login renderiza as informações corretas', () => {
@@ -58,5 +59,99 @@ describe('Testes Header', () => {
 
     const email = screen.getByText(userEmail);
     expect(email).toBeDefined();
+  });
+
+  it('Verifica se o valor total é somado corretamente', async () => {
+    renderWithRedux(<Wallet />);
+
+    const expenseValue = await screen.findByLabelText(/Valor da despesa/i);
+    expect(screen.getByTestId(totalField)).toHaveTextContent('0');
+    userEvent.type(expenseValue, '22');
+
+    const expenseDescription = screen.getByLabelText(/Descrição da despesa/i);
+    userEvent.type(expenseDescription, 'Vinte e dois dolares');
+
+    const button = screen.getByText(/Adicionar despesa/i);
+
+    userEvent.click(button);
+
+    const value = await screen.findAllByText('113.82');
+    expect(value[0]).toBeDefined();
+  });
+});
+
+describe('Testes Table', () => {
+  it('Verifica se é criada uma tabela com os itens salvos', async () => {
+    renderWithRouterAndRedux(<Wallet />);
+
+    const expenseValue = await screen.findByLabelText(/Valor da despesa/i);
+    userEvent.type(expenseValue, '500');
+
+    const currencyComboBox = screen.getByLabelText(/Moeda/i);
+    expect(currencyComboBox).toBeInTheDocument();
+    userEvent.selectOptions(currencyComboBox, 'EUR');
+
+    const expenseDescription = screen.getByLabelText(/Descrição da despesa/i);
+    userEvent.type(expenseDescription, 'Quinhentos Euros');
+
+    const button = screen.getByText(/Adicionar despesa/i);
+    userEvent.click(button);
+
+    const description = await screen.findByText('Quinhentos Euros');
+    expect(description).toBeInTheDocument();
+    const currency = screen.getByText('Euro/Real Brasileiro');
+    expect(currency).toBeDefined();
+  });
+
+  it('Verifica se ao clicar no botão excluir o item é removido da tabela', async () => {
+    renderWithRouterAndRedux(<Wallet />);
+
+    const expenseValue = await screen.findByLabelText(/Valor da despesa/i);
+    userEvent.type(expenseValue, '600');
+
+    const currencyComboBox = screen.getByLabelText(/Moeda/i);
+    expect(currencyComboBox).toBeInTheDocument();
+    userEvent.selectOptions(currencyComboBox, 'BTC');
+
+    const expenseDescription = screen.getByLabelText(/Descrição da despesa/i);
+    userEvent.type(expenseDescription, 'Seiscentos Bitcoins');
+
+    const button = screen.getByText(/Adicionar despesa/i);
+    userEvent.click(button);
+
+    const deleteExpenseButton = await screen.findByRole('button', { name: 'Excluir' });
+    expect(deleteExpenseButton).toBeDefined();
+    userEvent.click(deleteExpenseButton);
+
+    expect(screen.queryByText('Seiscentos Bitcoins')).not.toBeInTheDocument();
+  });
+
+  it('Verifica se é possível editar uma despesa', async () => {
+    renderWithRouterAndRedux(<Wallet />);
+
+    const expenseValue = await screen.findByLabelText(/Valor da despesa/i);
+    userEvent.type(expenseValue, '1000');
+
+    const currencyComboBox = screen.getByLabelText(/Moeda/i);
+    expect(currencyComboBox).toBeInTheDocument();
+    userEvent.selectOptions(currencyComboBox, 'JPY');
+
+    const expenseDescription = screen.getByLabelText(/Descrição da despesa/i);
+    userEvent.type(expenseDescription, '1000 Ienes');
+
+    const button = screen.getByText(/Adicionar despesa/i);
+    userEvent.click(button);
+
+    const editExpenseButton = await screen.findByRole('button', { name: 'Editar' });
+    expect(editExpenseButton).toBeDefined();
+    userEvent.click(editExpenseButton);
+
+    userEvent.type(expenseValue, '3000');
+    userEvent.type(expenseDescription, '3000 Ienes');
+    const updatExpenseInfoButton = screen.getByRole('button', { name: 'Editar despesa' });
+    userEvent.click(updatExpenseInfoButton);
+
+    expect(await screen.findByText(/3000 ienes/i)).toBeDefined();
+    expect(screen.getByText('3000.00')).toBeDefined();
   });
 });
