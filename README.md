@@ -1,13 +1,23 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+# Wallet App
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+## Introdução
+Um projeto feito inteiramente por mim.
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+É uma aplicação em que é possível genrenciar as suas despesas, sejam elas mensais ou anuais.
+
+## Como utilizar
+Primeiramente, na tela de login, coloque um email válido e uma senha com 6 ou mais caracteres. Esse login não serve pra nada. Só é enfeite mesmo :).
+
+Na página de despesas, é possível colocar uma despesa, obviamente. É possível colocar o valor, moeda, método de pagamento, categoria e descrição da despesa.
+
+Bem simples de se usar, só precisa saber ler.
+
+## Link do projeto
+https://wallet-app-delta.vercel.app/
+
+## Imagens do projeto
+
+![Tela de login](images/pagina-de-login.png)
+
+![Tela de despesas](images/pagina-de-despesas.png)
+
