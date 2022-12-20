@@ -1,10 +1,10 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithRouterAndRedux, renderWithRedux } from './tests/helpers/renderWith';
-import App from './App';
-import Wallet from './pages/Wallet';
-import mockData from './tests/helpers/mockData';
+import { renderWithRouterAndRedux, renderWithRedux } from './helpers/renderWith';
+import App from '../App';
+import Wallet from '../pages/Wallet';
+import mockData from './helpers/mockData';
 
 const userEmail = 'alguem@gmail.com';
 const totalField = 'total-field';

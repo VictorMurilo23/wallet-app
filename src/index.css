@@ -72,3 +72,83 @@ code {
 .login-wallet-image-container, .login-wallet-image-container img {
   width: 12em;
 }
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 6px;
+  align-items: center;
+  word-break: break-all;
+  margin-bottom: 16px;
+  font-size: 1rem;
+}
+
+.form-container {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  flex-direction: column;
+}
+
+.wallet-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: baseline;
+}
+
+.wallet-form label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wallet-form label span {
+  font-size: 1.1rem;
+}
+
+.form-input {
+  width: 10em;
+  height: 2em;
+  font-size: .9rem;
+  padding: 5px;
+}
+
+.save-or-edit-expense-button-container {
+  text-align: center;
+}
+
+.save-or-edit-expense-button-container button {
+  height: 3em;
+  padding: 6px;
+}
+
+.table-container {
+  overflow-x: scroll;
+  margin-top: 20px;
+  padding: 8px;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+.edit-and-delete-buttons-container {
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+}
+
+.edit-and-delete-buttons-container button {
+  border: 1px solid black;
+  border-radius: 6px;
+  height: 2em;
+}

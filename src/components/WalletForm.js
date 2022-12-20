@@ -105,11 +105,12 @@ class WalletForm extends Component {
       return <Loading />;
     }
     return (
-      <div>
-        <form>
+      <div className="form-container">
+        <form className="wallet-form">
           <label htmlFor="expenseValue">
-            Valor da despesa:
+            <span>Valor da despesa:</span>
             <input
+              className="form-input"
               id="expenseValue"
               type="number"
               name="value"
@@ -120,9 +121,10 @@ class WalletForm extends Component {
           </label>
 
           <label htmlFor="expenseCategory">
-            Moeda:
+            <span>Moeda:</span>
             <select
               id="expenseCategory"
+              className="form-input"
               name="currency"
               value={ currency }
               onChange={ this.handleChange }
@@ -139,8 +141,9 @@ class WalletForm extends Component {
           </label>
 
           <label htmlFor="paymentMethod">
-            Método de pagamento:
+            <span>Método de pagamento:</span>
             <select
+              className="form-input"
               id="paymentMethod"
               name="method"
               value={ method }
@@ -160,8 +163,9 @@ class WalletForm extends Component {
           </label>
 
           <label htmlFor="expenseCategory">
-            Categoria:
+            <span>Categoria:</span>
             <select
+              className="form-input"
               id="expenseCategory"
               name="tag"
               value={ tag }
@@ -187,8 +191,9 @@ class WalletForm extends Component {
           </label>
 
           <label htmlFor="expenseDescription">
-            Descrição da despesa:
+            <span>Descrição da despesa:</span>
             <input
+              className="form-input"
               id="expenseDescription"
               type="text"
               name="description"
@@ -197,14 +202,16 @@ class WalletForm extends Component {
               data-testid="description-input"
             />
           </label>
-
+        </form>
+        <div className="save-or-edit-expense-button-container">
           <button
             type="button"
+            className="save-or-edit-expense-button"
             onClick={ this.saveInfo }
           >
             { editor ? 'Editar despesa' : 'Adicionar despesa' }
           </button>
-        </form>
+        </div>
       </div>
     );
   }

@@ -14,7 +14,7 @@ class Table extends Component {
   render() {
     const { expenses, editExpense } = this.props;
     return (
-      <div>
+      <div className="table-container">
         <table>
           <thead>
             <tr>
@@ -57,20 +57,22 @@ class Table extends Component {
                   </td>
                   <td>Real</td>
                   <td>
-                    <button
-                      type="button"
-                      onClick={ () => this.removeElement(expense.id) }
-                      data-testid="delete-btn"
-                    >
-                      Excluir
-                    </button>
-                    <button
-                      type="button"
-                      onClick={ () => editExpense(expense.id) }
-                      data-testid="edit-btn"
-                    >
-                      Editar
-                    </button>
+                    <div className="edit-and-delete-buttons-container">
+                      <button
+                        type="button"
+                        onClick={ () => this.removeElement(expense.id) }
+                        data-testid="delete-btn"
+                      >
+                        Excluir
+                      </button>
+                      <button
+                        type="button"
+                        onClick={ () => editExpense(expense.id) }
+                        data-testid="edit-btn"
+                      >
+                        Editar
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))
