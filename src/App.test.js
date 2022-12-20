@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux, renderWithRedux } from './tests/helpers/renderWith';
 import App from './App';
 import Wallet from './pages/Wallet';
+import mockData from './tests/helpers/mockData';
 
 const userEmail = 'alguem@gmail.com';
 const totalField = 'total-field';
@@ -48,8 +49,12 @@ describe('Teste Login', () => {
   });
 });
 
+global.fetch = jest.fn(() => Promise.resolve({
+  json: () => Promise.resolve(mockData),
+}));
+
 describe('Testes Header', () => {
-  it('Verifica se o email do usuario aparece no Header', () => {
+  it('Verifica se o email do usuario aparece no Header', async () => {
     const initialState = {
       user: {
         email: userEmail,
@@ -57,7 +62,7 @@ describe('Testes Header', () => {
     };
     renderWithRedux(<Wallet />, { initialState });
 
-    const email = screen.getByText(userEmail);
+    const email = await screen.findByText(userEmail);
     expect(email).toBeDefined();
   });
 
@@ -75,7 +80,7 @@ describe('Testes Header', () => {
 
     userEvent.click(button);
 
-    const value = await screen.findAllByText('113.82');
+    const value = await screen.findAllByText('104.57');
     expect(value[0]).toBeDefined();
   });
 });

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { saveEmailAction } from '../redux/actions';
+import wallet from '../images/wallet.png';
 
 class Login extends React.Component {
   constructor() {
@@ -47,37 +48,45 @@ class Login extends React.Component {
     const { email, password, disabled } = this.state;
     const { saveEmail } = this.props;
     return (
-      <main>
-        <div>
-          <input
-            type="email"
-            placeholder="Email"
-            value={ email }
-            onChange={ this.handleChange }
-            data-testid="email-input"
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Senha"
-            value={ password }
-            onChange={ this.handleChange }
-            data-testid="password-input"
-          />
-        </div>
-        <div>
-          <button
-            type="button"
-            disabled={ disabled }
-            onClick={ () => {
-              saveEmail(email);
-              const { history } = this.props;
-              history.push('/carteira');
-            } }
-          >
-            Entrar
-          </button>
+      <main className="login-container">
+        <div className="login-inputs-container">
+          <div className="login-wallet-image-container">
+            <img src={ wallet } alt="Imagem de uma carteira" />
+          </div>
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              className="login-input"
+              value={ email }
+              onChange={ this.handleChange }
+              data-testid="email-input"
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Senha"
+              className="login-input"
+              value={ password }
+              onChange={ this.handleChange }
+              data-testid="password-input"
+            />
+          </div>
+          <div>
+            <button
+              type="button"
+              disabled={ disabled }
+              className="enter-login-button"
+              onClick={ () => {
+                saveEmail(email);
+                const { history } = this.props;
+                history.push('/carteira');
+              } }
+            >
+              Entrar
+            </button>
+          </div>
         </div>
       </main>
     );

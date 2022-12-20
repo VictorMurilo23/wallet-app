@@ -7,23 +7,25 @@ class Header extends Component {
     const { email, expenses } = this.props;
     return (
       <header>
-        <p data-testid="email-field">{email}</p>
-        <p>
-          Valor total:
-          {' '}
-          <span data-testid="total-field">
-            {
-              expenses.reduce((acc, cur) => {
-                const brlMoney = Number(cur.value * cur.exchangeRates[cur.currency].ask);
-                acc += brlMoney;
-                return Number(acc);
-              }, 0).toFixed(2)
-            }
-          </span>
-
-          {' '}
-          <span data-testid="header-currency-field">BRL</span>
-        </p>
+        <div>
+          <p data-testid="email-field">{email}</p>
+          <p>
+            Valor total:
+            {' '}
+            <span data-testid="total-field">
+              {
+                expenses.reduce((acc, cur) => {
+                  const brlMoney = Number(cur.value * cur
+                    .exchangeRates[cur.currency].ask);
+                  acc += brlMoney;
+                  return Number(acc);
+                }, 0).toFixed(2)
+              }
+            </span>
+            {' '}
+            <span data-testid="header-currency-field">BRL</span>
+          </p>
+        </div>
       </header>
     );
   }
